@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rozalie Hernandez — Shopify Store Operations Coordinator</title>
+<meta name="description" content="Shopify Store Operations Coordinator with 20 years of ecommerce experience — product catalog management, SEO listings, order fulfillment, and purchasing support.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rozalie Hernandez — Shopify Store Operations Coordinator">
+<meta property="og:description" content="20 years managing Shopify product catalogs, SEO listings, order fulfillment, and purchasing for ecommerce brands.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rozalie Hernandez — Shopify Store Operations Coordinator">
+<meta name="twitter:description" content="20 years managing Shopify product catalogs, SEO listings, order fulfillment, and purchasing for ecommerce brands.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F7F7F3;
+    --bg-panel: #FFFFFF;
+    --ink: #171F1B;
+    --ink-soft: #4B564F;
+    --line: #DBDFD7;
+    --line-soft: #E9EBE5;
+    --accent: #316B4A;      /* status green */
+    --accent-soft: #E4EEE7;
+    --tag: #B8791E;         /* sku / label amber */
+    --tag-soft: #F5E9D4;
+    --dark: #14201A;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .display{font-family:'Space Grotesk',sans-serif;}
+
+  a{color:inherit;}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    border-bottom:1px solid var(--line);
+    background:var(--bg);
+    position:sticky; top:0; z-index:20;
+  }
+  .topbar-inner{
+    max-width:1080px;margin:0 auto;padding:18px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:0.02em;
+  }
+  .brand span{color:var(--accent);}
+  .status-pill{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--accent);
+    border:1px solid var(--accent-soft);
+    background:var(--accent-soft);
+    padding:6px 12px;border-radius:100px;
+  }
+  .status-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:76px 0 48px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--tag);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:24px;height:1px;background:var(--tag);display:inline-block;}
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(40px,6vw,64px);
+    line-height:1.03;
+    margin:0 0 20px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--accent);
+  }
+  .hero-sub{
+    font-size:18px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    max-width:620px;
+    margin:0 0 34px;
+  }
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13.5px;
+    padding:13px 22px;
+    border-radius:6px;
+    border:1px solid var(--dark);
+    background:var(--dark);
+    color:#fff;
+    text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);background:#0d1712;}
+  .btn.ghost{
+    background:transparent;color:var(--dark);border:1px solid var(--line);
+  }
+  .btn.ghost:hover{border-color:var(--dark);}
+
+  /* ---------- dashboard stats ---------- */
+  .dash{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:0;
+    background:var(--bg-panel);
+  }
+  .dash-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+  }
+  .dash-cell{
+    padding:28px 32px;
+    border-right:1px solid var(--line-soft);
+  }
+  .dash-cell:last-child{border-right:none;}
+  .dash-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .dash-value{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:30px;
+    letter-spacing:-0.01em;
+  }
+  .dash-value span{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    font-weight:400;
+    color:var(--ink-soft);
+    margin-left:4px;
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:76px 0;}
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:40px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:18px;
+    flex-wrap:wrap;gap:10px;
+  }
+  .section-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--tag);
+  }
+  .section-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:28px;font-weight:700;margin:0;
+  }
+  .section-note{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;color:var(--ink-soft);
+  }
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:start;}
+  .about-text p{font-size:16.5px;line-height:1.75;color:var(--ink-soft);margin:0 0 18px;}
+  .about-text strong{color:var(--ink);font-weight:600;}
+  .skills-panel{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px 26px 22px;
+    background:var(--bg-panel);
+  }
+  .skills-panel h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--ink-soft);margin:0 0 16px;
+  }
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+  .tag-row:last-child{margin-bottom:0;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    padding:6px 11px;
+    border-radius:5px;
+    border:1px solid var(--line);
+    background:var(--bg);
+    color:var(--ink-soft);
+  }
+  .tag.on{
+    border-color:var(--accent-soft);
+    background:var(--accent-soft);
+    color:var(--accent);
+  }
+
+  /* client store catalog */
+  .catalog-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+  }
+  .catalog-item{
+    display:flex;flex-direction:column;gap:10px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:18px 18px 16px;
+    background:var(--bg-panel);
+    text-decoration:none;
+    color:var(--ink);
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .catalog-item:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .catalog-top{display:flex;align-items:center;justify-content:space-between;}
+  .catalog-index{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--tag);}
+  .catalog-arrow{font-size:14px;color:var(--ink-soft);}
+  .catalog-name{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;font-size:15.5px;
+  }
+  .catalog-url{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;color:var(--ink-soft);
+    word-break:break-all;
+  }
+
+  /* work log */
+  .log{border-top:1px solid var(--line);}
+  .log-row{
+    display:grid;
+    grid-template-columns:150px 1.4fr 2fr;
+    gap:24px;
+    padding:22px 0;
+    border-bottom:1px solid var(--line-soft);
+    align-items:start;
+  }
+  .log-period{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;color:var(--ink-soft);
+    padding-top:3px;
+  }
+  .log-role{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;font-size:16.5px;
+    margin-bottom:4px;
+  }
+  .log-client{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--tag);
+  }
+  .log-desc{font-size:14.5px;line-height:1.65;color:var(--ink-soft);}
+
+  .log-more{
+    margin-top:10px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .log-more summary{cursor:pointer;color:var(--accent);list-style:none;}
+  .log-more summary::-webkit-details-marker{display:none;}
+  .log-more summary::before{content:'+ ';}
+  .log-more[open] summary::before{content:'– ';}
+  .mini-row{
+    display:flex;justify-content:space-between;gap:16px;
+    padding:10px 0;border-top:1px solid var(--line-soft);
+    font-size:13px;
+  }
+  .mini-role{color:var(--ink);}
+  .mini-period{color:var(--ink-soft);white-space:nowrap;}
+
+  /* education */
+  .edu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .edu-item{
+    border:1px solid var(--line);border-radius:8px;
+    padding:20px 22px;background:var(--bg-panel);
+  }
+  .edu-degree{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15.5px;margin-bottom:4px;}
+  .edu-school{font-size:13.5px;color:var(--ink-soft);margin-bottom:8px;}
+  .edu-year{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--tag);}
+
+  /* footer / contact */
+  footer{
+    background:var(--dark);
+    color:#F2F4F1;
+    padding:70px 0 40px;
+  }
+  .footer-head{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(28px,4vw,42px);
+    margin:0 0 18px;
+    max-width:560px;
+  }
+  .footer-sub{color:#A9B2AA;font-size:15.5px;max-width:480px;margin-bottom:34px;line-height:1.6;}
+  .contact-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:56px;}
+  .contact-chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13.5px;
+    border:1px solid #2B382F;
+    padding:12px 18px;border-radius:6px;
+    color:#F2F4F1;text-decoration:none;
+    display:flex;align-items:center;gap:8px;
+  }
+  .contact-chip:hover{border-color:var(--accent);}
+  .footer-bottom{
+    border-top:1px solid #2B382F;
+    padding-top:22px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;color:#7C8A7E;
+  }
+
+  @media (max-width:860px){
+    .about-grid{grid-template-columns:1fr;}
+    .dash-grid{grid-template-columns:repeat(2,1fr);}
+    .dash-cell{border-bottom:1px solid var(--line-soft);}
+    .catalog-grid{grid-template-columns:repeat(2,1fr);}
+    .log-row{grid-template-columns:1fr;gap:6px;}
+    .log-period{padding-top:0;}
+    .edu-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:520px){
+    .wrap{padding:0 20px;}
+    .catalog-grid{grid-template-columns:1fr;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">ROZALIE <span>HERNANDEZ</span></div>
+    <div class="status-pill"><span class="status-dot"></span>ACTIVE — TAKING NEW CLIENTS</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="hero" style="padding-bottom:0;">
+    <div class="eyebrow">Shopify Store Operations</div>
+    <h1>Your catalog, <em>organized.</em><br>Your storefront, <em>optimized.</em></h1>
+    <p class="hero-sub">
+      I'm Rozalie — a Shopify operations coordinator with 20 years managing product catalogs, SEO listings, order fulfillment, and backend admin for ecommerce brands. I keep the store running so you don't have to.
+    </p>
+    <div class="hero-cta">
+      <a class="btn" href="mailto:hhlucky16@gmail.com">Start a project →</a>
+      <a class="btn ghost" href="#work">View work history</a>
+    </div>
+  </section>
+</div>
+
+<div class="dash">
+  <div class="wrap">
+    <div class="dash-grid">
+      <div class="dash-cell">
+        <div class="dash-label">Experience</div>
+        <div class="dash-value">20<span>years</span></div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-label">Stores managed</div>
+        <div class="dash-value">15+<span>brands</span></div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-label">Platforms</div>
+        <div class="dash-value">Shopify<span>+ Magento</span></div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-label">Availability</div>
+        <div class="dash-value">Remote<span>full-time</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section id="about">
+    <div class="section-head">
+      <span class="section-num">01 — PROFILE</span>
+      <h2 class="section-title">About</h2>
+      <span class="section-note">EST. 2011</span>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Over the past two decades I've worked behind the scenes of dozens of ecommerce brands — uploading and optimizing product catalogs, writing SEO-friendly titles and descriptions, managing inventory, and coordinating order fulfillment across <strong>Shopify, Magento, and other ecommerce platforms.</strong></p>
+        <p>I specialize in the operational side of running an online store: keeping product data accurate, pricing consistent, listings search-ready, and orders moving from purchase to delivery — so store owners can focus on growing the business instead of managing the backend.</p>
+        <p>Highly organized, detail-oriented, and comfortable working independently across multiple stores and priorities in fast-paced remote environments.</p>
+      </div>
+      <div class="skills-panel">
+        <h4>Store Operations</h4>
+        <div class="tag-row">
+          <span class="tag on">Shopify Management</span>
+          <span class="tag on">Product Uploading</span>
+          <span class="tag on">Listing Optimization</span>
+          <span class="tag on">Order Fulfillment</span>
+          <span class="tag on">Purchasing Support</span>
+          <span class="tag on">Supplier Research</span>
+        </div>
+        <h4>Digital &amp; Admin</h4>
+        <div class="tag-row">
+          <span class="tag">SEO Optimization</span>
+          <span class="tag">Data Entry</span>
+          <span class="tag">Spreadsheet Mgmt</span>
+          <span class="tag">HTML &amp; CSS</span>
+          <span class="tag">Graphic Design</span>
+          <span class="tag">Customer Support</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stores">
+    <div class="section-head">
+      <span class="section-num">02 — CATALOG</span>
+      <h2 class="section-title">Client Shopify Stores</h2>
+      <span class="section-note">11 LIVE STORES</span>
+    </div>
+    <div class="catalog-grid">
+      <a class="catalog-item" href="https://premierbidets.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-01</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">Premier Bidets</div>
+        <div class="catalog-url">premierbidets.com</div>
+      </a>
+      <a class="catalog-item" href="https://strengthwarehouseusa.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-02</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">Strength Warehouse USA</div>
+        <div class="catalog-url">strengthwarehouseusa.com</div>
+      </a>
+      <a class="catalog-item" href="https://extremekidsworld.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-03</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">Xtreme Kids USA</div>
+        <div class="catalog-url">extremekidsworld.com</div>
+      </a>
+      <a class="catalog-item" href="https://alignedplay.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-04</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">AlignedPlay</div>
+        <div class="catalog-url">alignedplay.com</div>
+      </a>
+      <a class="catalog-item" href="https://www.standingdesknation.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-05</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">Standing Desk Nation</div>
+        <div class="catalog-url">standingdesknation.com</div>
+      </a>
+      <a class="catalog-item" href="https://www.babyonline.co.nz/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-06</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">Baby Online NZ</div>
+        <div class="catalog-url">babyonline.co.nz</div>
+      </a>
+      <a class="catalog-item" href="https://www.ebikejoy.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-07</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">eBikeJoy</div>
+        <div class="catalog-url">ebikejoy.com</div>
+      </a>
+      <a class="catalog-item" href="https://www.doingoods.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-08</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">Doingoods</div>
+        <div class="catalog-url">doingoods.com</div>
+      </a>
+      <a class="catalog-item" href="https://www.recoveryforathletes.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-09</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">Recovery For Athletes</div>
+        <div class="catalog-url">recoveryforathletes.com</div>
+      </a>
+      <a class="catalog-item" href="https://betterbirdiesgolf.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-10</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">Better Birdie Golf</div>
+        <div class="catalog-url">betterbirdiesgolf.com</div>
+      </a>
+      <a class="catalog-item" href="https://tinyhomeequipment.com/" target="_blank" rel="noopener">
+        <div class="catalog-top"><span class="catalog-index">SKU-11</span><span class="catalog-arrow">↗</span></div>
+        <div class="catalog-name">Tiny Home Equipment</div>
+        <div class="catalog-url">tinyhomeequipment.com</div>
+      </a>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="section-head">
+      <span class="section-num">03 — LOG</span>
+      <h2 class="section-title">Work History</h2>
+      <span class="section-note">2011 — PRESENT</span>
+    </div>
+    <div class="log">
+
+      <div class="log-row">
+        <div class="log-period mono">2024 – 2026</div>
+        <div>
+          <div class="log-role">Shopify Backend &amp; Content Specialist</div>
+          <div class="log-client">PremierBidet · John Grant</div>
+        </div>
+        <div class="log-desc">
+          Managed end-to-end Shopify product catalog operations — uploading, updating, and optimizing listings while maintaining a high level of data accuracy. Handled SEO-friendly titles, descriptions, meta tags, and image optimization; kept backend settings, pricing, and store content accurate and QA-checked.
+        </div>
+      </div>
+
+      <div class="log-row">
+        <div class="log-period mono">2023 – 2025</div>
+        <div>
+          <div class="log-role">Shopify Product &amp; Store Management Specialist</div>
+          <div class="log-client">Better Birdie · Xtreme Kids USA · AlignedPlay / Tiny Home Equipment</div>
+        </div>
+        <div class="log-desc">
+          Uploaded, edited, and optimized product listings with SEO-friendly titles, descriptions, meta tags, and image alt text across multiple stores. Maintained pricing, inventory, collections, tags, and vendors while ensuring consistent branding, and coordinated product launches to improve conversion.
+        </div>
+      </div>
+
+      <div class="log-row">
+        <div class="log-period mono">2018 – 2023</div>
+        <div>
+          <div class="log-role">Order Fulfillment Specialist &amp; Purchasing Manager</div>
+          <div class="log-client">Strength Warehouse USA &amp; Multiple Ecommerce Stores · Joe Serrao</div>
+        </div>
+        <div class="log-desc">
+          Managed end-to-end order fulfillment — processing customer orders and coordinating with warehouses, suppliers, and shipping carriers for on-time delivery. Sourced products, created purchase orders, negotiated with suppliers, and monitored inventory to maintain availability and cost efficiency.
+        </div>
+      </div>
+
+      <details class="log-more">
+        <summary>Show earlier roles (2011 – 2017)</summary>
+        <div class="mini-row"><span class="mini-role">Shopify Product Listing Specialist — Doingoods.com</span><span class="mini-period">Jun 2017</span></div>
+        <div class="mini-row"><span class="mini-role">Shopify Product Lister — GorgeousGorgeous.com</span><span class="mini-period">Feb 2017</span></div>
+        <div class="mini-row"><span class="mini-role">Magento Product Upload Specialist — The Nutty Fruity</span><span class="mini-period">Jan – Apr 2017</span></div>
+        <div class="mini-row"><span class="mini-role">Magento Product Upload Specialist — Natreco.com, Gary Collins</span><span class="mini-period">Jul – Dec 2016</span></div>
+        <div class="mini-row"><span class="mini-role">Product Research Specialist (Project-Based) — SalonMart.com</span><span class="mini-period">Jun 2016</span></div>
+        <div class="mini-row"><span class="mini-role">Magento Product Upload Specialist — Altimus Express</span><span class="mini-period">Jan 2015 – Jun 2016</span></div>
+        <div class="mini-row"><span class="mini-role">Lead Generation Specialist — All Play Media</span><span class="mini-period">Jan 2015 – Jun 2016</span></div>
+        <div class="mini-row"><span class="mini-role">Email Support Specialist — New Media Services</span><span class="mini-period">Jan 2011 – Dec 2016</span></div>
+        <div class="mini-row"><span class="mini-role">Virtual Assistant — Content Delivery</span><span class="mini-period">Aug 2013 – Jan 2015</span></div>
+        <div class="mini-row"><span class="mini-role">Website &amp; Game Tester — American Mobile</span><span class="mini-period">Jul 2012 – Aug 2013</span></div>
+        <div class="mini-row"><span class="mini-role">Virtual Assistant — Aven Republic</span><span class="mini-period">Jan 2012 – May 2014</span></div>
+      </details>
+
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-head">
+      <span class="section-num">04 — EDUCATION</span>
+      <h2 class="section-title">Education</h2>
+      <span class="section-note">UNIVERSITY OF THE CORDILLERAS</span>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-item">
+        <div class="edu-degree">B.S. Tourism Management</div>
+        <div class="edu-school">University of the Cordilleras</div>
+        <div class="edu-year mono">2006 – 2007</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">B.S. Hotel and Restaurant Management</div>
+        <div class="edu-school">University of the Cordilleras</div>
+        <div class="edu-year mono">2003 – 2006</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <h3 class="footer-head">Ready to clean up your catalog and get orders moving faster?</h3>
+    <p class="footer-sub">I take on Shopify store management, product listing &amp; SEO, order fulfillment, and purchasing support for growing ecommerce brands.</p>
+    <div class="contact-row">
+      <a class="contact-chip" href="mailto:hhlucky16@gmail.com">✉ hhlucky16@gmail.com</a>
+      <a class="contact-chip" href="tel:+639276665961">☎ +63 927 666 5961</a>
+    </div>
+    <div class="footer-bottom">
+      <span>ROZALIE HERNANDEZ — SHOPIFY STORE OPERATIONS COORDINATOR</span>
+      <span>BASED IN THE PHILIPPINES · WORKS REMOTE</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
